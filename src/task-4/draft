@@ -1,0 +1,3 @@
+struct node *node   0x8052140
+int *array          0x804e110
+array_idx_1         0x804c084  

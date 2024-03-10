@@ -1,0 +1,58 @@
+add_vect:
+	pushl	%ebp
+	movl 	%esp, %ebp
+			/*[ebp + 8]  int *v1
+			  [ebp + 12] int *v2
+			  [ebp + 16] int n
+			  [ebp + 20] int *v
+			*/  
+	push esi
+	push edi
+	push ebx
+	xor ecx, ecx				//contor
+	xor edx, edx
+	mov esi, [ebp + 8]
+	mov edi, [ebp + 12]
+	mov ebx, [ebp + 20]
+
+aduna:
+	mov eax, [esi + 4 * ecx]
+	add eax, [edi + 4 * ecx]
+	mov [ebx + 4 * ecx], eax
+	add ecx, 1
+	cmp ecx, [ebp + 16]
+	jl aduna
+
+	mov eax, [ebp + 16]
+	mov ecx, [FIRST_POSITION]
+    cmp eax, ecx
+    je no_scaling1
+    mul ecx
+    mov ecx, 10
+	div ecx
+	mov ecx, eax
+no_scaling1:
+	mov eax, [FIRST_VALUE]
+	sub [ebx + 4 * ecx], eax
+
+	mov eax, [ebp + 16]
+	mov ecx, [SECOND_POSITION]
+	div ecx
+	mov ecx, eax
+	mov eax, [SECOND_VALUE]
+	sub [ebx + 4 * ecx], eax
+
+	mov eax, [ebp + 16]
+	mov ecx, [THIRD_POSITION]
+	div ecx
+	mov ecx, eax
+	mov eax, [THIRD_VALUE]
+	sub [ebx + 4 * ecx], eax
+
+
+
+	pop ebx
+	pop edi
+	pop esi
+	leave
+	ret
